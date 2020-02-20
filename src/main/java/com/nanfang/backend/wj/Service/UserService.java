@@ -1,11 +1,13 @@
 package com.nanfang.backend.wj.Service;
 
+import com.nanfang.backend.result.Result;
 import com.nanfang.backend.wj.bean.User;
 import com.nanfang.backend.wj.dao.UserMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author nanfang
@@ -17,18 +19,15 @@ public class UserService {
     @Resource(name="userMapper")
     private UserMapper userMapper;
 
-    public Boolean login(User user){
+    public String login(User user){
         // 对 html 标签进行转义，防止 XSS 攻击
         String uid = user.getUid();
         uid = HtmlUtils.htmlEscape(uid);
         User findUser=userMapper.findByUsernameAndPassword(uid,user.getPassword());
-        System.out.println(findUser);
-        if (findUser==null) {
-            System.out.println("账号密码错误");
-            return false;
-        } else {
-            System.out.println("登录成功");
-            return true;
+        if(findUser==null){
+            return "";
+        }else{
+            return findUser.getUid();
         }
     }
 //  注册账号密码
@@ -41,7 +40,15 @@ public class UserService {
 //    }
 
     //修改密码
-    public Boolean changePassword(User user){
-        return userMapper.changePassword(user.getPassword(),user.getUid());
+    public Result changePassword(Map<String,Object> requestMap){
+        String uid=requestMap.get("uid").toString();
+        String oldPass=requestMap.get("oldPass").toString();
+        String newPass=requestMap.get("newPass").toString();
+        if(userMapper.changePassword(newPass,uid,oldPass)){
+            return new Result(200);
+        }else{
+            return new Result(400);
+        }
+
     }
 }

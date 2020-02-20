@@ -33,6 +33,14 @@ public class UserController {
 //    public Boolean register(@RequestBody User requestUser){
 //        return userService.register(requestUser);
 //    }
+
+    //修改密码
+    @PostMapping(value="apo/changePassword")
+    @ResponseBody
+    public Boolean ChangePassword(@RequestBody User requestUser){
+        return userService.changePassword(requestUser);
+    }
+
 }
 
 

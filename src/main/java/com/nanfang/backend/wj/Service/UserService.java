@@ -39,4 +39,9 @@ public class UserService {
 //        int row=userMapper.insertIntoUser(uid,username,password);
 //        return row!=0;
 //    }
+
+    //修改密码
+    public Boolean changePassword(User user){
+        return userMapper.changePassword(user.getPassword(),user.getUid());
+    }
 }

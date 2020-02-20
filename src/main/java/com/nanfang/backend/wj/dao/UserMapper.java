@@ -21,5 +21,5 @@ public interface UserMapper {
 
     //申请账号功能插入一个账号密码
     @Insert("Insert into user(uid,username,password) values(#{param1},#{param2},#{param3})")
-    int insertIntoUser(String username,String password);
+    int insertIntoUser(String uid,String username,String password);
 }

@@ -20,6 +20,6 @@ public interface UserMapper {
     User findByUsernameAndPassword(String uid,String password);
 
     //申请账号功能插入一个账号密码
-    @Insert("Insert into user(uid,username,password) values(#{param1},#{param2},#{param3})")
-    int insertIntoUser(String uid,String username,String password);
+//    @Insert("Insert into user(uid,username,password) values(#{param1},#{param2},#{param3})")
+//    int insertIntoUser(String uid,String username,String password);
 }

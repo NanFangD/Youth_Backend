@@ -31,12 +31,12 @@ public class UserService {
             return true;
         }
     }
-
-    public Boolean register(User user){
-        String uid=user.getUid();
-        String username=user.getUsername();
-        String password=user.getPassword();
-        int row=userMapper.insertIntoUser(uid,username,password);
-        return row!=0;
-    }
+//  注册账号密码
+//    public Boolean register(User user){
+//        String uid=user.getUid();
+//        String username=user.getUsername();
+//        String password=user.getPassword();
+//        int row=userMapper.insertIntoUser(uid,username,password);
+//        return row!=0;
+//    }
 }

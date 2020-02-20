@@ -5,13 +5,10 @@ package com.nanfang.backend.wj.contorller;
  * @create 2020/01/27/16:00
  */
 
-import com.nanfang.backend.result.Result;
 import com.nanfang.backend.wj.Service.UserService;
 import com.nanfang.backend.wj.bean.User;
-import com.nanfang.backend.wj.dao.UserMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.HtmlUtils;
 
 
 import javax.annotation.Resource;
@@ -31,11 +28,11 @@ public class UserController {
        return userService.login(requestUser);
     }
 
-    @PostMapping(value="api/register")
-    @ResponseBody
-    public Boolean register(@RequestBody User requestUser){
-        return userService.register(requestUser);
-    }
+//    @PostMapping(value="api/register")
+//    @ResponseBody
+//    public Boolean register(@RequestBody User requestUser){
+//        return userService.register(requestUser);
+//    }
 }
 
 

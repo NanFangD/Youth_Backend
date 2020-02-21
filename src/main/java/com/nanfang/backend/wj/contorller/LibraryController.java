@@ -141,8 +141,6 @@ public class LibraryController {
                 .substring(file.getOriginalFilename().length() - 4));
         if (!f.getParentFile().exists())
             f.getParentFile().mkdirs();
-        System.out.println(f.getPath());
-        System.out.println(f.toString());
         try {
             file.transferTo(f);
             String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName();

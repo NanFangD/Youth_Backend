@@ -5,7 +5,7 @@ package com.nanfang.backend.result;
  * @create 2020/01/27/15:59
  */
 public class Result {
-    //响应码
+    //响应码400 和 200
     private int code;
 
     public Result(int code) {

@@ -117,6 +117,7 @@ public class LibraryController {
     @CrossOrigin
     @PostMapping("api/insert")
     public Result insertBook(@RequestBody Book book){
+        System.out.println(book);
         if(bookService.insertBook(book)==0){
             return new Result(400);
         } else {
@@ -145,6 +146,7 @@ public class LibraryController {
         try {
             file.transferTo(f);
             String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName();
+            System.out.println(imgURL);
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

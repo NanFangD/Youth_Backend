@@ -135,7 +135,8 @@ public class LibraryController {
     @CrossOrigin
     @PostMapping("api/uploadImg")
     public String coversUpload(MultipartFile file) throws Exception {
-        String folder = "/home/Youth-imgs";
+        System.out.println("api/uploadImg");
+        String folder = "/home/Youth-imgs/";
         File imageFolder = new File(folder);
         File f = new File(imageFolder, getRandomString(10) + file.getOriginalFilename()
                 .substring(file.getOriginalFilename().length() - 4));

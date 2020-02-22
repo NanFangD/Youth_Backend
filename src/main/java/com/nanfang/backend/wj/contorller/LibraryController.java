@@ -117,6 +117,7 @@ public class LibraryController {
     @CrossOrigin
     @PostMapping("api/insert")
     public Result insertBook(@RequestBody Book book){
+        System.out.println(book);
         if(bookService.insertBook(book)==0){
             return new Result(400);
         } else {
@@ -135,17 +136,17 @@ public class LibraryController {
     @CrossOrigin
     @PostMapping("api/uploadImg")
     public String coversUpload(MultipartFile file) throws Exception {
-        String folder = "/home/Youth-imgs";
+        System.out.println("api/uploadImg");
+        String folder = "/home/Youth-imgs/";
         File imageFolder = new File(folder);
         File f = new File(imageFolder, getRandomString(10) + file.getOriginalFilename()
                 .substring(file.getOriginalFilename().length() - 4));
         if (!f.getParentFile().exists())
             f.getParentFile().mkdirs();
-        System.out.println(f.getPath());
-        System.out.println(f.toString());
         try {
             file.transferTo(f);
             String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName();
+            System.out.println(imgURL);
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

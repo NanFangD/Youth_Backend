@@ -4,6 +4,7 @@ import com.nanfang.backend.wj.bean.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 //import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,11 +16,15 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository(value = "userMapper")
 public interface UserMapper {
-    //根据账号密码查询
+    //登录功能根据账号密码查询
     @Select("Select * from user where uid=#{param1} and password=#{param2}")
     User findByUsernameAndPassword(String uid,String password);
 
-    //插入一个账号密码
-    @Insert("Insert into user(username,password) values(#{param1},#{param2})")
-    int insertIntoUser(String username,String password);
+    //申请账号功能插入一个账号密码
+//    @Insert("Insert into user(uid,username,password) values(#{param1},#{param2},#{param3})")
+//    int insertIntoUser(String uid,String username,String password);
+
+    //修改密码
+    @Update("update user set password=#{param1} where uid=#{param2} and password=#{param3}")
+    Boolean changePassword(String newPass,String uid,String password);
 }

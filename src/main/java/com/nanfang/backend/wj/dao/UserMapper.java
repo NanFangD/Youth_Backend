@@ -27,4 +27,7 @@ public interface UserMapper {
     //修改密码
     @Update("update user set password=#{param1} where uid=#{param2} and password=#{param3}")
     Boolean changePassword(String newPass,String uid,String password);
+
+    @Select("Select * from user where uid=#{param1}")
+    User findByUserName(String id);
 }

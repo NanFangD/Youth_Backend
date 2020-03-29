@@ -3,6 +3,7 @@ package com.nanfang.backend.wj.contorller;
 import com.nanfang.backend.result.Result;
 import com.nanfang.backend.wj.Service.BookService;
 import com.nanfang.backend.wj.bean.Book;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -136,17 +137,32 @@ public class LibraryController {
     @CrossOrigin
     @PostMapping("api/uploadImg")
     public String coversUpload(MultipartFile file) throws Exception {
-        System.out.println("api/uploadImg");
-        String folder = "/home/Youth-imgs/";
+        //查看图片类型
+        String type=file.getContentType().split("/")[1];
+        if(type==null||file.getSize()>1048576){
+            return null;
+        }
+        String folder = "/home/Youth-imgs";
         File imageFolder = new File(folder);
         File f = new File(imageFolder, getRandomString(10) + file.getOriginalFilename()
                 .substring(file.getOriginalFilename().length() - 4));
         if (!f.getParentFile().exists())
+            //如果不存在文件则创建文件夹
             f.getParentFile().mkdirs();
         try {
+            //存入图片
             file.transferTo(f);
-            String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName();
-            System.out.println(imgURL);
+            //对存入的图片进行压缩,并转换为jpeg格式
+            Thumbnails.of(f)
+                    .outputFormat("jpg")
+                    .scale(0.5f)//图片比例压缩
+                    .outputQuality(0.5f)//图片清晰度压缩
+                    .toFile(f.getPath().split("\\.")[0]+".jpg");
+            if(!type.equals("jpeg")){
+                //删除图片
+                f.delete();
+            }
+            String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName().split("\\.")[0]+".jpg";
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();

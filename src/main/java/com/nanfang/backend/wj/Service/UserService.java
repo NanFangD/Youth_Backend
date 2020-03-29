@@ -49,6 +49,9 @@ public class UserService {
         }else{
             return new Result(400);
         }
-
+    }
+    public boolean selectUser(Map<String,Object>requestMap){
+        String id=requestMap.get("uid").toString();
+        return userMapper.findByUserName(id) != null;
     }
 }

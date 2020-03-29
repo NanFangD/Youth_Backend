@@ -18,7 +18,7 @@ import java.util.Map;
 @Controller
 public class UserController {
     //Mybatis操作数据库
-    @Resource(name="userService")
+    @Resource(name = "userService")
     private UserService userService;
 
     //登录账号
@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping(value = "api/login")
     @ResponseBody
     public String login(@RequestBody User requestUser) {
-       return userService.login(requestUser);
+        return userService.login(requestUser);
     }
 
     //注册账号
@@ -39,12 +39,17 @@ public class UserController {
 //    }
 
     //修改密码
-    @PostMapping(value="api/changePassword")
+    @PostMapping(value = "api/changePassword")
     @ResponseBody
-    public Result ChangePassword(@RequestParam Map<String,Object> requestMap){
+    public Result ChangePassword(@RequestParam Map<String, Object> requestMap) {
         return userService.changePassword(requestMap);
     }
 
+    //查找账户是否存在
+    @PostMapping(value = "api/selectUser")
+    @ResponseBody
+    public Boolean selectUser(@RequestParam Map<String, Object> requestMap) {
+        return userService.selectUser(requestMap);
+    }
 }
-
 

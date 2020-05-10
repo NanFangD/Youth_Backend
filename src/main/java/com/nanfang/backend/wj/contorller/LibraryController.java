@@ -21,20 +21,20 @@ import java.util.Random;
  */
 @RestController
 public class LibraryController {
-    @Resource(name="bookService")
+    @Resource(name = "bookService")
     private BookService bookService;
 
     //返回所有的图书
     @CrossOrigin
     @GetMapping("api/books")
-    public List<Book>findAll() throws Exception{
+    public List<Book> findAll() throws Exception {
         return bookService.findAll();
     }
 
     //根据用户账号返回所有的书
     @CrossOrigin
     @PostMapping("api/booksByUid")
-    public List<Book>findAllByUid(@RequestBody Book book){
+    public List<Book> findAllByUid(@RequestBody Book book) {
         return bookService.findAllByUid(book.getUid());
     }
 
@@ -45,16 +45,17 @@ public class LibraryController {
         if (!cid.equals("0")) {
             return bookService.findAllByCategory(cid);
         } else {
-           return findAll();
+            return findAll();
         }
     }
+
     //根据种类和用户名查询用户添加的图书
     @CrossOrigin
     @PostMapping("api/categories/uid/UserBooks")
-    public List<Book> listByCategoryAndUid(@RequestBody Book book){
+    public List<Book> listByCategoryAndUid(@RequestBody Book book) {
         System.out.println(book);
         if (!book.getCid().equals("0")) {
-            return bookService.findAllByCategoryAndUid(book.getCid(),book.getUid());
+            return bookService.findAllByCategoryAndUid(book.getCid(), book.getUid());
         } else {
             return bookService.findAllByUid(book.getUid());
         }
@@ -64,9 +65,9 @@ public class LibraryController {
     //根据id删除图书
     @CrossOrigin
     @PostMapping("api/delete")
-    public Result deleteBookById(@RequestBody Book book){
-        int num=bookService.deleteBookById(book.getId());
-        if(num==0){
+    public Result deleteBookById(@RequestBody Book book) {
+        int num = bookService.deleteBookById(book.getId());
+        if (num == 0) {
             return new Result(400);
         } else {
             return new Result(200);
@@ -76,61 +77,64 @@ public class LibraryController {
     //根据id和用户编号删除图书，并删除本地服务器存储的图片
     @PostMapping("api/deleteById")
     @CrossOrigin
-    public Result deleteBookByIdAndUid(@RequestBody Book book){
-        int num=bookService.deleteBookByIdAndUid(book);
-        if(num==0){
+    public Result deleteBookByIdAndUid(@RequestBody Book book) {
+        int num = bookService.deleteBookByIdAndUid(book);
+        if (num == 0) {
             return new Result(400);
         } else {
-            if(!book.getCover().equals("")){
-                String cover=book.getCover().split("/api/file/")[1];
+            if (!book.getCover().equals("")) {
+                String cover = book.getCover().split("/api/file/")[1];
                 deleteImg(cover);
             }
-            if(!book.getImg_1().equals("")){
-                String img_1=book.getImg_1().split("/api/file/")[1];
+            if (!book.getImg_1().equals("")) {
+                String img_1 = book.getImg_1().split("/api/file/")[1];
                 deleteImg(img_1);
             }
-            if(!book.getImg_2().equals("")){
-                String img_2=book.getImg_2().split("/api/file/")[1];
+            if (!book.getImg_2().equals("")) {
+                String img_2 = book.getImg_2().split("/api/file/")[1];
                 deleteImg(img_2);
             }
-            if(!book.getImg_3().equals("")){
-                String img_3=book.getImg_3().split("/api/file/")[1];
+            if (!book.getImg_3().equals("")) {
+                String img_3 = book.getImg_3().split("/api/file/")[1];
                 deleteImg(img_3);
             }
-            if(!book.getImg_4().equals("")){
-                String img_4=book.getImg_4().split("/api/file/")[1];
+            if (!book.getImg_4().equals("")) {
+                String img_4 = book.getImg_4().split("/api/file/")[1];
                 deleteImg(img_4);
             }
-            if(!book.getImg_5().equals("")){
-                String img_5=book.getImg_5().split("/api/file/")[1];
+            if (!book.getImg_5().equals("")) {
+                String img_5 = book.getImg_5().split("/api/file/")[1];
                 deleteImg(img_5);
             }
             return new Result(200);
         }
     }
+
     @CrossOrigin
-    public void deleteImg(String imgName){
-        String imgUrl="/home/Youth-imgs/"+imgName;
-        File img=new File(imgUrl);
+    public void deleteImg(String imgName) {
+        String imgUrl = "/home/Youth-imgs/" + imgName;
+        File img = new File(imgUrl);
         img.delete();
     }
+
     //添加一本图书
     @CrossOrigin
     @PostMapping("api/insert")
-    public Result insertBook(@RequestBody Book book){
+    public Result insertBook(@RequestBody Book book) {
         System.out.println(book);
-        if(bookService.insertBook(book)==0){
+        if (bookService.insertBook(book) == 0) {
             return new Result(400);
         } else {
             return new Result(200);
         }
     }
+
     //根据书名查找图书
     //使用form表单传递数据
     @CrossOrigin
     @PostMapping("api/search")
-    public List<Book> searchBooksByTitle(@RequestParam Map<String,Object> keywords, HttpSession session){
-        return bookService.finAllByTitle((String)keywords.get("keywords"));
+    public List<Book> searchBooksByTitle(@RequestParam Map<String, Object> keywords, HttpSession session) {
+        return bookService.finAllByTitle((String) keywords.get("keywords"));
     }
 
     //上传图片
@@ -138,8 +142,8 @@ public class LibraryController {
     @PostMapping("api/uploadImg")
     public String coversUpload(MultipartFile file) throws Exception {
         //查看图片类型
-        String type=file.getContentType().split("/")[1];
-        if(type==null||file.getSize()>1048576){
+        String type = file.getContentType().split("/")[1];
+        if (type == null || file.getSize() > 1048576) {
             return null;
         }
         String folder = "/home/Youth-imgs";
@@ -157,23 +161,24 @@ public class LibraryController {
                     .outputFormat("jpg")
                     .scale(0.5f)//图片比例压缩
                     .outputQuality(0.5f)//图片清晰度压缩
-                    .toFile(f.getPath().split("\\.")[0]+".jpg");
-            if(!type.equals("jpeg")){
+                    .toFile(f.getPath().split("\\.")[0] + ".jpg");
+            if (!type.equals("jpeg")) {
                 //删除图片
                 f.delete();
             }
-            String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName().split("\\.")[0]+".jpg";
+            String imgURL = "http://118.25.61.247:8443/api/file/" + f.getName().split("\\.")[0] + ".jpg";
             return imgURL;
         } catch (IOException e) {
             e.printStackTrace();
             return "";
         }
     }
+
     //删除图片
     @CrossOrigin
     @PostMapping("api/deleteImg")
-    public void deleteImg(@RequestParam Map<String,Object> requestMap){
-        String imgName=requestMap.get("imgUrl").toString().split("/api/file/")[1];
+    public void deleteImg(@RequestParam Map<String, Object> requestMap) {
+        String imgName = requestMap.get("imgUrl").toString().split("/api/file/")[1];
         deleteImg(imgName);
     }
 

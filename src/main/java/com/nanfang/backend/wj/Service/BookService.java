@@ -1,7 +1,6 @@
 package com.nanfang.backend.wj.Service;
 
 import com.nanfang.backend.wj.bean.Book;
-import com.nanfang.backend.wj.bean.Category;
 import com.nanfang.backend.wj.dao.BookMapper;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +34,10 @@ public class BookService {
     public List<Book> findAllByCategory(String cid) {
         return bookMapper.findAllByCategory(cid);
     }
+
     //根据书的种类和用户账户返回所有的书
-    public List<Book> findAllByCategoryAndUid(String cid,String uid){
-        return bookMapper.findAllByCategoryAndUid(cid,uid);
+    public List<Book> findAllByCategoryAndUid(String cid, String uid) {
+        return bookMapper.findAllByCategoryAndUid(cid, uid);
     }
 
     //根据书名找到所有的数据

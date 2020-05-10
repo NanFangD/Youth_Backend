@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2020/02/07/09:44
  */
 @Mapper
-@Repository(value="categoryMapper")
+@Repository(value = "categoryMapper")
 public interface CategoryMapper {
 
     //查询所有的种类

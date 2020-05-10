@@ -1,4 +1,5 @@
 package com.nanfang.backend.wj.bean;
+
 /**
  * @author nanfang
  * @create 2020/01/27/15:58
